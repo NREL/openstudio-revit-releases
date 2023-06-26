@@ -3,7 +3,7 @@ name: energyplus
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 env:
   BUILD_TYPE: Release
