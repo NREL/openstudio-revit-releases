@@ -3,11 +3,12 @@ name: energyplus
 on:
   push:
     tags:
-      - 'v*'
+      - '*'
 
 env:
   OS_VER: 3.6.0
   OS_SHA: 860f5de185
+  EP_VER: v23.1.0
   BUILD_TYPE: Release
   Python_REQUIRED_VERSION: 3.8
   # the following variables customize the build for revit
@@ -42,7 +43,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: NREL/EnergyPlus
-        ref: ${{ github.ref }}
+        ref: ${{ env.EP_VER }}
 
     - name: Set up Python ${{ env.Python_REQUIRED_VERSION }}
       uses: actions/setup-python@v4
@@ -85,11 +86,11 @@ jobs:
     - name: upload
       uses: actions/upload-artifact@v3
       with:
-        path: build/EnergyPlus-*-Windows-${{ env.PACKAGE_ARCH }}.exe
+        path: build/EnergyPlus-*-Windows-${{ env.PACKAGE_ARCH }}.zip
 
     # use this action per archived https://github.com/actions/upload-release-asset
     - name: release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: build/EnergyPlus-*-Windows-${{ env.PACKAGE_ARCH }}.exe
+        files: build/EnergyPlus-*-Windows-${{ env.PACKAGE_ARCH }}.zip
