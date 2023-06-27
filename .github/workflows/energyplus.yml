@@ -26,8 +26,8 @@ jobs:
     - name: get
       shell: bash  
       run: |
-        curl -LO https://github.com/NREL/OpenStudio/releases/download/v${{ env.VERSION }}/OpenStudio-${{ env.VERSION }}+${{ env.SHA }}-Windows.tar.gz
-        tar -xzf OpenStudio-${{ env.VERSION }}+${{ env.SHA }}-Windows.tar.gz
+        curl -LO https://github.com/NREL/OpenStudio/releases/download/v${{ env.OS_VER }}/OpenStudio-${{ env.OS_VER }}+${{ env.OS_SHA }}-Windows.tar.gz
+        tar -xzf OpenStudio-${{ env.OS_VER }}+${{ env.OS_SHA }}-Windows.tar.gz
   
   windows_release:
     runs-on: windows-2019
