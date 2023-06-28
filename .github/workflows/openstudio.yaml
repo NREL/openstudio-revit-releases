@@ -1,0 +1,20 @@
+name: openstudio
+
+on: workflow_dispatch
+
+env:
+  OS_VER: 3.6.0
+  OS_SHA: 860f5de185
+  
+jobs:
+  openstudio:
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: get
+      shell: bash  
+      run: |
+        curl -LO https://github.com/NREL/OpenStudio/releases/download/v${{ env.OS_VER }}/OpenStudio-${{ env.OS_VER }}+${{ env.OS_SHA }}-Windows.tar.gz
+        tar -xzf OpenStudio-${{ env.OS_VER }}+${{ env.OS_SHA }}-Windows.tar.gz
+  
