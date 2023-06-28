@@ -1,9 +1,6 @@
 name: energyplus
-# https://github.com/NREL/EnergyPlus/blob/develop/.github/workflows/windows_release.yml
-on:
-  push:
-    tags:
-      - '*'
+
+on: workflow_dispatch
 
 env:
   EP_VER: v23.1.0
@@ -16,6 +13,7 @@ env:
   PACKAGE_ARCH: x86_64
 
 jobs:
+  # https://github.com/NREL/EnergyPlus/blob/develop/.github/workflows/windows_release.yml
   windows_release:
     runs-on: windows-2019
 
