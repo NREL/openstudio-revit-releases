@@ -6,8 +6,6 @@ on:
       - '*'
 
 env:
-  OS_VER: 3.6.0
-  OS_SHA: 860f5de185
   EP_VER: v23.1.0
   BUILD_TYPE: Release
   Python_REQUIRED_VERSION: 3.8
@@ -18,17 +16,6 @@ env:
   PACKAGE_ARCH: x86_64
 
 jobs:
-  openstudio:
-    runs-on: windows-2019
-    permissions: write-all
-    steps:
-    - uses: actions/checkout@v3   
-    - name: get
-      shell: bash  
-      run: |
-        curl -LO https://github.com/NREL/OpenStudio/releases/download/v${{ env.OS_VER }}/OpenStudio-${{ env.OS_VER }}+${{ env.OS_SHA }}-Windows.tar.gz
-        tar -xzf OpenStudio-${{ env.OS_VER }}+${{ env.OS_SHA }}-Windows.tar.gz
-  
   windows_release:
     runs-on: windows-2019
 
