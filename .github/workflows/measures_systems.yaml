@@ -1,0 +1,31 @@
+name: measures_systems
+
+on: workflow_dispatch
+
+env:
+  SYSTEMS: main
+
+jobs:
+  update:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: sparse checkout NREL/SystemsAnalysisReports
+        uses: actions/checkout@v3
+        with:
+          repository: NREL/SystemsAnalysisReports
+          ref: ${{ env.SYSTEMS }}
+          path: systems
+          sparse-checkout: measure/systems_analysis_report_generator
+          
+      - name: copy files from NREL/SystemsAnalysisReports
+        shell: bash
+        run: cp -r systems/measure measures && ls measures
+ 
+      - name: upload files
+        uses: actions/upload-artifact@v3
+        with:
+          name: measures
+          path: measures
+
