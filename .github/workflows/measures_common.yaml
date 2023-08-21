@@ -1,0 +1,32 @@
+name: measures_common
+
+on: workflow_dispatch
+
+env:
+  COMMON: v0.8.0
+
+jobs:
+  update:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: sparse checkout NREL/openstudio-common-measures-gem
+        uses: actions/checkout@v3
+        with:
+          repository: NREL/openstudio-common-measures-gem
+          ref: ${{ env.COMMON }}
+          path: common
+          sparse-checkout: |
+            lib/measures/ChangeBuildingLocation
+            lib/measures/openstudio_results
+      - name: copy files from NREL/openstudio-common-measures-gem
+        shell: bash
+        run: cp -r common/lib/measures measures && ls measures
+
+      - name: upload files
+        uses: actions/upload-artifact@v3
+        with:
+          name: measures
+          path: measures
+
