@@ -1,0 +1,31 @@
+name: pre-release
+
+on: workflow_dispatch
+
+jobs:
+
+  files:
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/workflows/openstudio_measures_common.yaml
+    - uses: ./.github/workflows/openstudio_measures_gbxml.yaml
+    - uses: ./.github/workflows/openstudio_measures_systems.yaml
+
+  upload:
+    needs: files
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/upload-artifact@v3
+      with:
+        name: measures
+        path: measures
+
+  download:
+    needs: files
+    runs-on: windows-2019
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        path: measures
