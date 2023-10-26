@@ -46,6 +46,6 @@ jobs:
         with:
           commit-message: update measures systems
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          title: '[action] update measures-systems'
+          title: '[action] update measures systems'
           branch: action/update-measures-systems
           base: main 
