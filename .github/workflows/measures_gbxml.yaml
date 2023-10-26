@@ -33,3 +33,23 @@ jobs:
           name: measures
           path: measures
 
+  pull-request:
+    needs: update
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/download-artifact@v3
+      
+      - name: list
+        run: |
+          ls measures/   
+
+      - name: pull request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: update measures gbxml
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          title: '[action] update measures gbxml'
+          branch: action/update-measures-gbxml
+          base: main 
