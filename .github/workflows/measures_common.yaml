@@ -30,3 +30,23 @@ jobs:
           name: measures
           path: measures
 
+  pull-request:
+    needs: update
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: actions/download-artifact@v3
+      
+      - name: list
+        run: |
+          ls measures/   
+
+      - name: pull request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: update measures common
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          title: '[action] update measures common'
+          branch: action/update-measures-common
+          base: main 
