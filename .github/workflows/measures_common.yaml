@@ -1,6 +1,6 @@
 name: measures_common
 
-on: workflow_dispatch
+on: [workflow_call, workflow_dispatch]
 
 env:
   COMMON: v0.8.0
