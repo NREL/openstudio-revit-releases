@@ -1,6 +1,6 @@
 name: measures_systems
 
-on: workflow_dispatch
+on: [workflow_call, workflow_dispatch]
 
 env:
   SYSTEMS: main
