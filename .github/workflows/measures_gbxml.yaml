@@ -1,6 +1,6 @@
 name: measures_gbxml
 
-on: workflow_dispatch
+on: [workflow_call, workflow_dispatch]
 
 env:
   GBXML: master
