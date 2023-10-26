@@ -20,6 +20,7 @@ jobs:
           sparse-checkout: |
             lib/measures/ChangeBuildingLocation
             lib/measures/openstudio_results
+
       - name: copy files from NREL/openstudio-common-measures-gem
         shell: bash
         run: cp -r common/lib/measures measures && ls measures
