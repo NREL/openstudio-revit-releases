@@ -4,16 +4,16 @@ on: workflow_dispatch
 
 jobs:
 
-  files:
-    runs-on: windows-2019
-    steps:
-    - uses: actions/checkout@v4
-    - uses: ./.github/workflows/measures_common.yaml
-    - uses: ./.github/workflows/measures_gbxml.yaml
-    - uses: ./.github/workflows/measures_systems.yaml
+  measures_common:
+    uses: ./.github/workflows/measures_common.yaml
+
+  measures_gbxml:
+    uses: ./.github/workflows/measures_gbxml.yaml
+
+  measures_systems:
+    uses: ./.github/workflows/measures_systems.yaml
 
   upload:
-    needs: files
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v4
@@ -23,7 +23,6 @@ jobs:
         path: measures
 
   download:
-    needs: files
     runs-on: windows-2019
     steps:
     - uses: actions/download-artifact@v3
