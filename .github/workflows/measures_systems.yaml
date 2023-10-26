@@ -21,7 +21,7 @@ jobs:
           
       - name: copy files from NREL/SystemsAnalysisReports
         shell: bash
-        run: cp -r systems/measure/ measures && ls measures
+        run: cp -r systems/measure/ measures/ && ls measures
  
       - name: upload files
         uses: actions/upload-artifact@v3
