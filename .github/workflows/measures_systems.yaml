@@ -9,10 +9,10 @@ jobs:
   update:
     runs-on: windows-2019
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: sparse checkout NREL/SystemsAnalysisReports
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: NREL/SystemsAnalysisReports
           ref: ${{ env.SYSTEMS }}
