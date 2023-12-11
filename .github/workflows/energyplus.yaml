@@ -3,7 +3,7 @@ name: energyplus
 on: workflow_dispatch
 
 env:
-  EP_VER: v23.1.0
+  EP_VER: v23.2.0
   BUILD_TYPE: Release
   Python_REQUIRED_VERSION: 3.8
   # the following variables customize the build for revit
@@ -72,6 +72,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         path: build/EnergyPlus-*-Windows-${{ env.PACKAGE_ARCH }}.zip
+
+    - name: dnload
+      uses: actions/download-artifact@v3
 
     # use this action per archived https://github.com/actions/upload-release-asset
     - name: release
