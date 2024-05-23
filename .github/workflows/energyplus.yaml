@@ -52,6 +52,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    # checkout EnergyPlus repo after this repo for paths to work
     - name: checkout NREL/EnergyPlus
       uses: actions/checkout@v3
       with:
