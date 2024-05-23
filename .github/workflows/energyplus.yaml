@@ -18,20 +18,20 @@ env:
 jobs:
   windows_release:
     runs-on: windows-2019
-    # # to move to windows-2022, just make sure to set the Visual Studio generator build to "17 2022"
-    # continue-on-error: ${{ matrix.allow_failure }}
-    # strategy:
-    #   # fail-fast: Default is true, switch to false to allow one platform to fail and still run others
-    #   fail-fast: false
-    #   matrix:
-    #     name: [x64, x64_hardened]  # removed x86 because it won't build packages now
-    #     include:
-    #     - name: x64
-    #       arch: x64
-    #       allow_failure: false
-    #       vs-generator: x64
-    #       package-arch: x86_64
-    #       enable_hardened_runtime: OFF
+    # to move to windows-2022, just make sure to set the Visual Studio generator build to "17 2022"
+    continue-on-error: ${{ matrix.allow_failure }}
+    strategy:
+      # fail-fast: Default is true, switch to false to allow one platform to fail and still run others
+      fail-fast: false
+      matrix:
+        name: [x64] #, x64_hardened]  # removed x86 because it won't build packages now
+        include:
+        - name: x64
+          arch: x64
+          allow_failure: false
+          vs-generator: x64
+          package-arch: x86_64
+          enable_hardened_runtime: OFF
     #     # - name: x86
     #     #   arch: x86
     #     #   allow_failure: false
@@ -63,7 +63,7 @@ jobs:
       id: setup-python
       with:
         python-version: ${{ env.Python_REQUIRED_VERSION }}
-        # architecture: ${{ matrix.arch }}
+        architecture: ${{ matrix.arch }}
 
     - name: Setup QtIFW 4.x
       uses: jmarrec/setup-qtifw@v1
@@ -112,14 +112,14 @@ jobs:
     #     mpm --find-updates
     #     mpm --admin --find-updates
 
-    # - name: Downgrade cmake to 3.28
-    #   run: |
-    #     cmake --version
-    #     choco install cmake --version=3.28.4 --installargs 'ADD_CMAKE_TO_PATH=System'
+    - name: Downgrade cmake to 3.28
+      run: |
+        cmake --version
+        choco install cmake --version=3.28.4 --installargs 'ADD_CMAKE_TO_PATH=System'
 
-    # - name: Check cmake
-    #   run: |
-    #     cmake --version
+    - name: Check cmake
+      run: |
+        cmake --version
 
     # # This will install all required packages and does that in a single thread. So later in cmake we can safely run in parallel
     # - name: Install required packages by building the Test document
@@ -139,12 +139,12 @@ jobs:
       shell: bash
       run: |
         set -x
-        cmake -G "Visual Studio 16 2019" -A ${{ env.CMAKE_GENERATOR_PLATFORM }} \
-              -DLINK_WITH_PYTHON:BOOL=${{ env.CMAKE_LINK_WITH_PYTHON }} -DPython_REQUIRED_VERSION:STRING=${{ steps.setup-python.outputs.python-version }} \
-              -DPython_ROOT_DIR:PATH=$RUNNER_TOOL_CACHE/Python/${{ steps.setup-python.outputs.python-version }}/${{ env.CMAKE_GENERATOR_PLATFORM }}/ \
+        cmake -G "Visual Studio 16 2019" -A ${{ matrix.vs-generator }} \
+              -DLINK_WITH_PYTHON:BOOL=OFF -DPython_REQUIRED_VERSION:STRING=${{ steps.setup-python.outputs.python-version }} \
+              -DPython_ROOT_DIR:PATH=$RUNNER_TOOL_CACHE/Python/${{ steps.setup-python.outputs.python-version }}/${{ matrix.arch }}/ \
               -DBUILD_FORTRAN:BOOL=ON -DBUILD_PACKAGE:BOOL=ON \
-              -DENABLE_HARDENED_RUNTIME:BOOL=${{ env.CMAKE_ENABLE_HARDENED_RUNTIME }} \
-              -DDOCUMENTATION_BUILD:STRING="DoNotBuild" \
+              -DENABLE_HARDENED_RUNTIME:BOOL=${{ matrix.enable_hardened_runtime }} \
+              -DDOCUMENTATION_BUILD:STRING="DoNotBuild" -DTEX_INTERACTION:STRING="batchmode" \
               ../
 
     - name: Build Package
