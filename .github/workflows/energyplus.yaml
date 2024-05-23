@@ -50,13 +50,13 @@ jobs:
       contents: write
 
     steps:
+    - uses: actions/checkout@v3
+
     - name: checkout NREL/EnergyPlus
       uses: actions/checkout@v3
       with:
         repository: NREL/EnergyPlus
         ref: ${{ env.EP_VER }}
-
-    - uses: actions/checkout@v3
 
     - name: Set up Python ${{ env.Python_REQUIRED_VERSION }}
       uses: actions/setup-python@v4
